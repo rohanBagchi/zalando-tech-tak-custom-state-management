@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, createContext, useContext } from 'react';
 import './App.css';
+
+const AppContext = createContext();
 
 function App() {
   const [state, setState] = useState({
@@ -9,47 +11,55 @@ function App() {
 
   return (
     <div>
-      <Banner name={state.brand} />
-      <Tagline tagline={state.tagLine} />
+      <AppContext.Provider value={{ state, setState }}>
+        <Banner name={state.brand} />
+        <Tagline tagline={state.tagLine} />
 
-      <EditBrand
-        name={state.brand}
-        setName={(updatedBrand) => {
-          setState((state) => ({ ...state, brand: updatedBrand }));
-        }}
-      />
-      <EditTagline
-        tagLine={state.tagLine}
-        setTagline={(updatedTagLine) => {
-          setState((state) => ({ ...state, tagLine: updatedTagLine }));
-        }}
-      />
+        <EditBrand
+          name={state.brand}
+          setName={(updatedBrand) => {
+            setState((state) => ({ ...state, brand: updatedBrand }));
+          }}
+        />
+        <EditTagline
+          tagLine={state.tagLine}
+          setTagline={(updatedTagLine) => {
+            setState((state) => ({ ...state, tagLine: updatedTagLine }));
+          }}
+        />
+      </AppContext.Provider>
     </div>
   );
 }
 
-function Banner({ name }) {
+function Banner() {
   console.count('banner');
+  const { state } = useContext(AppContext);
+
   return (
     <fieldset>
       <legend>Banner</legend>
-      <h1>{name}</h1>
+      <h1>{state.brand}</h1>
     </fieldset>
   );
 }
 
-function Tagline({ tagline }) {
+function Tagline() {
   console.count('tagline');
+  const { state } = useContext(AppContext);
 
   return (
     <fieldset>
       <legend>Tag Line</legend>
-      <p>{tagline}</p>
+      <p>{state.tagLine}</p>
     </fieldset>
   );
 }
 
-function EditBrand({ name, setName }) {
+function EditBrand() {
+  console.count('EditBrand');
+  const { state, setState } = useContext(AppContext);
+
   return (
     <div>
       <fieldset>
@@ -60,8 +70,8 @@ function EditBrand({ name, setName }) {
           <input
             type="text"
             name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={state.brand}
+            onChange={(e) => setState(s => ({ ...s, brand: e.target.value }))}
           />
         </label>
       </fieldset>
@@ -69,7 +79,10 @@ function EditBrand({ name, setName }) {
   );
 }
 
-function EditTagline({ tagLine, setTagline }) {
+function EditTagline() {
+  console.count('EditTagline');
+  const { state, setState } = useContext(AppContext);
+
   return (
     <div>
       <fieldset>
@@ -80,8 +93,8 @@ function EditTagline({ tagLine, setTagline }) {
           <input
             type="text"
             name="tagLine"
-            value={tagLine}
-            onChange={(e) => setTagline(e.target.value)}
+            value={state.tagLine}
+            onChange={(e) => setState(s => ({ ...s, tagLine: e.target.value }))}
           />
         </label>
       </fieldset>
