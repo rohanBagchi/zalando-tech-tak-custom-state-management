@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext, memo } from 'react';
 import './App.css';
 
 const AppContext = createContext();
@@ -12,16 +12,16 @@ function App() {
   return (
     <div>
       <AppContext.Provider value={{ state, setState }}>
-        <Banner name={state.brand} />
-        <Tagline tagline={state.tagLine} />
+        <MemoBanner name={state.brand} />
+        <MemoTagLine tagline={state.tagLine} />
 
-        <EditBrand
+        <MemoEditBrand
           name={state.brand}
           setName={(updatedBrand) => {
             setState((state) => ({ ...state, brand: updatedBrand }));
           }}
         />
-        <EditTagline
+        <MemoEditTagline
           tagLine={state.tagLine}
           setTagline={(updatedTagLine) => {
             setState((state) => ({ ...state, tagLine: updatedTagLine }));
@@ -31,6 +31,11 @@ function App() {
     </div>
   );
 }
+
+const MemoBanner = memo(Banner);
+const MemoTagLine = memo(Tagline);
+const MemoEditBrand = memo(EditBrand);
+const MemoEditTagline = memo(EditTagline);
 
 function Banner() {
   console.count('banner');
