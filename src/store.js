@@ -1,9 +1,4 @@
-import {
-    createContext,
-    useContext,
-    useEffect,
-    useState
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export function createStore(initialState) {
   let state = {
@@ -14,10 +9,10 @@ export function createStore(initialState) {
 
   function subscribe(listener) {
     listeners.add(listener);
+  }
 
-    return function unsubscribe() {
-      listeners.delete(listener);
-    }
+  function unsubscribe(listener) {
+    listeners.delete(listener);
   }
 
   function setState(newState) {
@@ -25,14 +20,15 @@ export function createStore(initialState) {
     listeners.forEach((listener) => listener(state));
   }
 
-  function getSnapshot() {
+  function getState() {
     return state;
   }
 
   return {
     subscribe,
+    unsubscribe,
     setState,
-    getSnapshot,
+    getState,
   };
 }
 
@@ -42,12 +38,13 @@ export const StoreProvider = StoreContext.Provider;
 export function useSelector(selectorFn) {
   const {
     subscribe,
+    unsubscribe,
     setState,
-    getSnapshot
+    getState
   } = useContext(StoreContext);
 
-  const currentStateSnapshot = getSnapshot();
-  const selectedState = selectorFn(currentStateSnapshot);
+  const state = getState();
+  const selectedState = selectorFn(state);
   const [stateSlice, setStateSlice] = useState(selectedState);
 
   useEffect(() => {
@@ -56,12 +53,12 @@ export function useSelector(selectorFn) {
       setStateSlice(updatedStateSlice);
     };
 
-    const unsubscribe = subscribe(listener);
+    subscribe(listener);
 
     return () => {
       unsubscribe(listener);
     };
-  }, [selectorFn, subscribe]);
+  }, [selectorFn, subscribe, unsubscribe]);
 
   return [stateSlice, setState];
 }
