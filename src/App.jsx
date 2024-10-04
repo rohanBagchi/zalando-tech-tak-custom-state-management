@@ -3,6 +3,7 @@ import { Banner } from './Banner';
 import { Tagline } from './Tagline';
 import { EditBrand } from './EditBrand';
 import { EditTagline } from './EditTagline';
+import { AppContext } from './AppContext';
 
 function App() {
   const [state, setState] = useState({
@@ -12,21 +13,18 @@ function App() {
 
   return (
     <div>
-      <Banner name={state.brand} />
-      <Tagline tagline={state.tagLine} />
+      <AppContext.Provider value={{ state, setState }}>
+        <Banner />
+        <Tagline />
 
-      <EditBrand
-        name={state.brand}
-        setName={(updatedBrand) => {
-          setState((state) => ({ ...state, brand: updatedBrand }));
-        }}
-      />
-      <EditTagline
-        tagLine={state.tagLine}
-        setTagline={(updatedTagLine) => {
-          setState((state) => ({ ...state, tagLine: updatedTagLine }));
-        }}
-      />
+        <EditBrand />
+        <EditTagline
+          tagLine={state.tagLine}
+          setTagline={(updatedTagLine) => {
+            setState((state) => ({ ...state, tagLine: updatedTagLine }));
+          }}
+        />
+      </AppContext.Provider>
     </div>
   );
 }

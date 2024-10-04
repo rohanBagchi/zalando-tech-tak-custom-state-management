@@ -1,16 +1,28 @@
-export function EditBrand({ name, setName }) {
+import { useContext } from "react";
+import { AppContext } from "./AppContext";
+
+export function EditBrand() {
+  const { state, setState } = useContext(AppContext);
+  const { brand } = state;
+
   return (
     <div>
       <fieldset>
-        <legend>Edit Name</legend>
+        <legend>Edit Brand</legend>
 
         <label>
-          Name
+          Brand Name
+          <br />
           <input
             type="text"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            name="brand"
+            value={brand}
+            onChange={(e) => 
+              setState(prev => ({
+                ...prev,
+                brand: e.target.value
+              }))
+            }
           />
         </label>
       </fieldset>
