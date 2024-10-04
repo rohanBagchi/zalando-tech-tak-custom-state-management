@@ -2,7 +2,7 @@ import { useSelector } from "./store";
 
 export function EditTagline() {
   const [tagLine, setState] = useSelector(state => state.tagLine);
-
+  console.count('EditTagline');
   return (
     <div>
       <fieldset>

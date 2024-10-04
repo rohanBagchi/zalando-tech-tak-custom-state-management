@@ -2,7 +2,7 @@ import { useSelector } from "./store";
 
 export function EditBrand() {
   const [brand, setState] = useSelector(state => state.brand);
-
+  console.count('EditBrand');
   return (
     <div>
       <fieldset>
