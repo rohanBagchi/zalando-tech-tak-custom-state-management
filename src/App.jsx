@@ -1,25 +1,24 @@
-import { useState } from 'react';
 import { Banner } from './Banner';
 import { Tagline } from './Tagline';
 import { EditBrand } from './EditBrand';
 import { EditTagline } from './EditTagline';
-import { AppContext } from './AppContext';
+import { createStore, StoreProvider } from './store';
+
+const store = createStore({
+  brand: 'Zalando',
+  tagLine: 'Be You',
+});
 
 function App() {
-  const [state, setState] = useState({
-    brand: 'Zalando',
-    tagLine: 'Be You',
-  });
-
   return (
     <div>
-      <AppContext.Provider value={{ state, setState }}>
+      <StoreProvider value={store}>
         <Banner />
         <Tagline />
 
         <EditBrand />
         <EditTagline />
-      </AppContext.Provider>
+      </StoreProvider>
     </div>
   );
 }

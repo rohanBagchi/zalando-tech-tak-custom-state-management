@@ -1,9 +1,7 @@
-import { useContext } from "react";
-import { AppContext } from "./AppContext";
+import { useSelector } from "./store";
 
 export function EditBrand() {
-  const { state, setState } = useContext(AppContext);
-  const { brand } = state;
+  const [brand, setState] = useSelector(state => state.brand);
 
   return (
     <div>
@@ -17,12 +15,7 @@ export function EditBrand() {
             type="text"
             name="brand"
             value={brand}
-            onChange={(e) => 
-              setState(prev => ({
-                ...prev,
-                brand: e.target.value
-              }))
-            }
+            onChange={(e) => setState({ brand: e.target.value })}
           />
         </label>
       </fieldset>

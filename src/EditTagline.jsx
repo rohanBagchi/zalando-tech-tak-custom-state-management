@@ -1,9 +1,7 @@
-import { useContext } from "react";
-import { AppContext } from "./AppContext";
+import { useSelector } from "./store";
 
 export function EditTagline() {
-  const { state, setState } = useContext(AppContext);
-  const { tagLine } = state;
+  const [tagLine, setState] = useSelector(state => state.tagLine);
 
   return (
     <div>
@@ -17,10 +15,7 @@ export function EditTagline() {
             type="text"
             name="tagLine"
             value={tagLine}
-            onChange={(e) => setState(prev => ({
-              ...prev,
-              tagLine: e.target.value
-            }))}
+            onChange={(e) => setState({ tagLine: e.target.value })}
           />
         </label>
       </fieldset>

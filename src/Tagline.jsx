@@ -1,9 +1,7 @@
-import { useContext } from "react";
-import { AppContext } from "./AppContext";
+import { useSelector } from "./store";
 
 export function Tagline() {
-  const { state } = useContext(AppContext);
-  const { tagLine } = state;
+  const [tagLine] = useSelector(state => state.tagLine);
 
   console.count('tagline');
 

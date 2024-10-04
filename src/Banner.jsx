@@ -1,9 +1,7 @@
-import { useContext } from "react";
-import { AppContext } from "./AppContext";
+import { useSelector } from "./store";
 
 export function Banner() {
-  const { state } = useContext(AppContext);
-  const { brand } = state;
+  const [brand] = useSelector(state => state.brand);
 
   console.count('banner');
   
