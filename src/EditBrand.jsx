@@ -4,7 +4,7 @@ import { AppContext } from "./AppContext";
 export function EditBrand() {
   const { state, setState } = useContext(AppContext);
   const { brand } = state;
-
+  console.count('EditBrand');
   return (
     <div>
       <fieldset>

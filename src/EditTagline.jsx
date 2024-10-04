@@ -4,7 +4,7 @@ import { AppContext } from "./AppContext";
 export function EditTagline() {
   const { state, setState } = useContext(AppContext);
   const { tagLine } = state;
-
+  console.count('EditTagline');
   return (
     <div>
       <fieldset>
