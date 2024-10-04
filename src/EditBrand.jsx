@@ -1,4 +1,5 @@
 export function EditBrand({ brand, setBrandName }) {
+  console.count('EditBrand');
   return (
     <div>
       <fieldset>

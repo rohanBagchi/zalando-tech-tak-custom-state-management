@@ -1,4 +1,5 @@
 export function EditTagline({ tagLine, setTagline }) {
+  console.count('EditTagline');
   return (
     <div>
       <fieldset>
