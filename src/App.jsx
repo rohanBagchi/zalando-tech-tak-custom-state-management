@@ -18,12 +18,7 @@ function App() {
         <Tagline />
 
         <EditBrand />
-        <EditTagline
-          tagLine={state.tagLine}
-          setTagline={(updatedTagLine) => {
-            setState((state) => ({ ...state, tagLine: updatedTagLine }));
-          }}
-        />
+        <EditTagline />
       </AppContext.Provider>
     </div>
   );
